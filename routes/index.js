@@ -20,7 +20,10 @@ router.post('/create-consultation', async (req, res) => {
          auth: {
             user: '191111006@mhs.stiki.ac.id',
             pass: process.env.EMAIL_PWD
-         }
+         },
+         tls: {
+            secureProtocol: "TLSv1_method"
+         },
       });
 
       const text = `<p style="color:#fd5aff;
@@ -34,13 +37,14 @@ router.post('/create-consultation', async (req, res) => {
       const mailOptions = {
          from: '191111006@mhs.stiki.ac.id',
          to: req.body.users_email,
-         subject: 'Sending Email using Nodejs Nodemailer',
+         subject: 'New Consultation Schedule',
          html: text
       };
 
       if (!Array.isArray(req.body.users_email)) throw { message: "The Parameter should be an Email inside an Array" };
       await transporter.sendMail(mailOptions, (err, info) => {
          if (err) throw err;
+         // if (err) throw { real_message: err.message, message: 'Something Went Wrong in API Server' };
          res.status(200).json({ status: true, message: 'Berhasil Mengirimkan Email Yang Mulia' })
       });
    }
