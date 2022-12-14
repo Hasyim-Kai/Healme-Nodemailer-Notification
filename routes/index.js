@@ -16,13 +16,20 @@ router.post('/create-consultation', async (req, res) => {
    try {
       const transporter = nodemailer.createTransport({
          service: 'gmail',
+         port: 465,
          auth: {
             user: '191111006@mhs.stiki.ac.id',
             pass: process.env.EMAIL_PWD
          }
       });
 
-      const text = `<h1>Welcome</h1><p>That was easy!</p>`
+      const text = `<p style="color:#fd5aff;
+  font-size:6em;
+  font-weight:500;
+  text-align:center;
+  margin:0;">Hi from Healme</p>
+  <p style="font-size:2em;text-align:center;color:#3D3D3D;">A New Consultation Schedule has Created!</p>
+  <p style="font-size:2em;text-align:center;color:#3D3D3D;margin:2rem 0;">Check it now, only on Healme</p>`
 
       const mailOptions = {
          from: '191111006@mhs.stiki.ac.id',
@@ -31,6 +38,7 @@ router.post('/create-consultation', async (req, res) => {
          html: text
       };
 
+      if (!Array.isArray(req.body.users_email)) throw { message: "The Parameter should be an Email inside an Array" };
       await transporter.sendMail(mailOptions, (err, info) => {
          if (err) throw err;
          res.status(200).json({ status: true, message: 'Berhasil Mengirimkan Email Yang Mulia' })
