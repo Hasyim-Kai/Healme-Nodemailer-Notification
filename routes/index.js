@@ -17,12 +17,14 @@ router.post('/create-consultation', async (req, res) => {
       const transporter = nodemailer.createTransport({
          service: 'gmail',
          port: 465,
+         secure: true,
          auth: {
             user: '191111006@mhs.stiki.ac.id',
             pass: process.env.EMAIL_PWD
          },
          tls: {
-            secureProtocol: "TLSv1_method"
+            // secureProtocol: "TLSv1_method"
+            rejectUnauthorized: true
          },
       });
 
