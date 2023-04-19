@@ -28,18 +28,26 @@ router.post('/create-consultation', async (req, res) => {
          },
       });
 
-      const text = `<p style="color:#fd5aff;
-  font-size:6em;
-  font-weight:500;
-  text-align:center;
-  margin:0;">Hi from Healme</p>
-  <p style="font-size:2em;text-align:center;color:#3D3D3D;">A New Consultation Schedule has Created!</p>
-  <p style="font-size:2em;text-align:center;color:#3D3D3D;margin:2rem 0;">Check it now, only on Healme</p>`
+      const text = req.body.notify_applied_user ? `<p style="color:#fd5aff;
+      font-size:6em;
+      font-weight:500;
+      text-align:center;
+      margin:0;">Hi from Healme</p>
+      <p style="font-size:2em;text-align:center;color:#3D3D3D;">You have Applied Succesfully</p>
+      <p style="font-size:2em;text-align:center;color:#3D3D3D;margin:2rem 0;">See you on Gmeet!</p>`
+      : `<p style="color:#fd5aff;
+      font-size:6em;
+      font-weight:500;
+      text-align:center;
+      margin:0;">Hi from Healme</p>
+      <p style="font-size:2em;text-align:center;color:#3D3D3D;">A New Consultation Schedule has Created!</p>
+      <p style="font-size:2em;text-align:center;color:#3D3D3D;margin:2rem 0;">Check it now, only on Healme</p>`
 
+      console.log(text)
       const mailOptions = {
          from: '191111006@mhs.stiki.ac.id',
          to: req.body.users_email,
-         subject: 'New Consultation Schedule',
+         subject: 'Healme Consultation Schedule',
          html: text
       };
 
